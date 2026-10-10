@@ -26,7 +26,8 @@ This is an [agent skill](https://kling.ai/document-api/llms.txt) — a directory
 `SKILL.md` plus supporting files. Drop it into your personal skills directory:
 
 ```bash
-git clone <this-repo> ~/.agents/skills/ai-short-drama-production
+git clone https://github.com/goordonbear/ai-short-drama-production.git \
+  ~/.agents/skills/ai-short-drama-production
 ```
 
 The agent picks it up on the next session, and it becomes usable from any project.

@@ -25,7 +25,8 @@
 輔助檔案的目錄。放進你的個人技能目錄即可：
 
 ```bash
-git clone <this-repo> ~/.agents/skills/ai-short-drama-production
+git clone https://github.com/goordonbear/ai-short-drama-production.git \
+  ~/.agents/skills/ai-short-drama-production
 ```
 
 下一次開啟 session 就會被載入，之後在任何專案都能使用。
