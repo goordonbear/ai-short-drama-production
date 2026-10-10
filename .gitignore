@@ -1,0 +1,27 @@
+# Generated and local-only — never commit any of this.
+
+# Credentials
+.kling.key
+.secrets/
+*.key
+.env
+
+# Production artifacts
+clips/
+build/
+output/
+bgm/
+voice/
+state.json
+audio-state.json
+ambience-state.json
+tts-voices.json
+
+# Tooling
+tools/
+node_modules/
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini

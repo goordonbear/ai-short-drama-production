@@ -1,0 +1,94 @@
+{
+  "_README": [
+    "AI short-drama generation plan. Copy to <project>/production.json and fill in.",
+    "One segment = one API call = one multi-shot generation (3-6 shots inside).",
+    "The per-shot seconds MUST sum to settings.duration, or the API rejects the call.",
+    "Validate with: node <skill>/scripts/kling-gen.js --dry-run",
+    "Per-segment overrides: audio, audioGain, grade."
+  ],
+
+  "title": "My Short Drama",
+
+  "model": "kling-3.0",
+  "endpoint": "/text-to-video/kling-3.0",
+
+  "settings": {
+    "resolution": "720p",
+    "aspect_ratio": "9:16",
+    "duration": 10,
+    "audio": "off",
+    "multi_shot": true,
+
+    "_canvas": "output resolution WxH; also drives subtitle scaling",
+    "canvas": "1080x1920",
+    "fps": 30,
+
+    "_titleCardSeconds": "black end card length; the last segment is trimmed by this much",
+    "titleCardSeconds": 1.5
+  },
+
+  "_bgmPlan": [
+    "Optional. Tiles the bgm/<file> cues to fill the timeline; durations should sum to",
+    "segments.length * settings.duration. Omit to loop warm.mp3 across the whole film.",
+    "Example: [{ \"file\": \"cool.mp3\", \"dur\": 20 }, { \"file\": \"warm.mp3\", \"dur\": 40 }]"
+  ],
+
+  "style_lock": "cinematic photorealistic live-action, vertical 9:16, 35mm lens, shallow depth of field, subtle film grain, NOT anime, NOT CGI",
+
+  "segments": [
+    {
+      "id": "S1",
+      "title": "Hook",
+      "look": "present / interior / warm",
+      "start": 0.0,
+      "prompt": "IMPORTANT CHARACTER NOTE: <defining trait> must be clearly visible in every shot <pronoun> appears in. <full character sheet>. <language constraint, if any> shot 1, 4, <low angle on an object, camera reveals the character + action>. <style string>; shot 2, 3, <reverse shot, second character reacts>. <style string>; shot 3, 3, <closing beat of the segment>. <style string>"
+    },
+    {
+      "id": "S2",
+      "title": "Cause / flashback",
+      "look": "past / exterior night / cool",
+      "start": 10.0,
+      "grade": "eq=saturation=0.82:contrast=1.06,colorbalance=bs=0.16:bm=0.10:bh=0.04,curves=blue='0/0.06 0.5/0.56 1/1'",
+      "prompt": "IMPORTANT CHARACTER NOTE: <same character sheet, verbatim>. shot 1, 4, <establishing cold-night image>. <style string>; shot 2, 3, <the pivotal action>. <style string>; shot 3, 3, <emotional close-up, with the anti-anime guard>. <style string>"
+    },
+    {
+      "id": "S3",
+      "title": "Turn / reveal",
+      "look": "present / interior night / high contrast",
+      "start": 20.0,
+      "prompt": "IMPORTANT CHARACTER NOTE: <same character sheet, verbatim>. shot 1, 3, <disruption: a sound, a flash, a knock>. <style string>; shot 2, 3, <tension beat>. <style string>; shot 3, 4, <the reveal>. <style string>"
+    },
+    {
+      "id": "S4",
+      "title": "Montage",
+      "look": "present / day / bright",
+      "start": 30.0,
+      "prompt": "IMPORTANT CHARACTER NOTE: <same character sheet, verbatim>. shot 1, 3, <behaviour gag 1>. <style string>; shot 2, 2, <behaviour gag 2>. <style string>; shot 3, 3, <behaviour gag 3>. <style string>; shot 4, 2, <behaviour gag 4>. <style string>"
+    },
+    {
+      "id": "S5",
+      "title": "Intimacy",
+      "look": "present / interior / warm",
+      "start": 40.0,
+      "prompt": "IMPORTANT CHARACTER NOTE: <same character sheet, verbatim>. shot 1, 4, <care-taking beat>. <style string>; shot 2, 3, <small gesture>. <style string>; shot 3, 3, <the quiet payoff>. <style string>"
+    },
+    {
+      "id": "S6",
+      "title": "Resolution + button",
+      "look": "present / interior night / warm",
+      "start": 50.0,
+      "audio": "native",
+      "audioGain": 1.7,
+      "prompt": "IMPORTANT CHARACTER NOTE: <same character sheet, verbatim>. <characters speak this language only>. shot 1, 3, <the last spoken line, one short line: ...>. <style string>; shot 2, 3, <close-up, anti-anime guard, No dialogue in this shot.>. <style string>; shot 3, 2, <rest beat>. <style string>; shot 4, 2, <button: straight to camera, then cut to black>. <style string>"
+    }
+  ],
+
+  "_editing": {
+    "order": "S1 -> S2 -> S3 -> S4 -> S5 -> S6. No reordering needed if start values are cumulative.",
+    "lastSegmentTrim": "assemble.js automatically trims the LAST segment by settings.titleCardSeconds and appends that much black, so the total stays exact.",
+    "audioMode": "Setting a segment's audio to 'native' makes final-mix.js use that clip's own audio track instead of clips/<id>_amb.mp3.",
+    "audioGain": "Optional per-segment level correction, e.g. 1.7 to lift a quiet speech segment by ~4.6 dB.",
+    "grades": "Optional per-segment ffmpeg filter chain, applied during normalisation.",
+    "subtitles": "Author subs.srt against the cumulative plan timeline, then fine-tune after reviewing the contact sheet."
+  }
+}
