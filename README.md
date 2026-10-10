@@ -1,5 +1,7 @@
 # AI Short Drama Production
 
+**English** · [繁體中文](README.zh-TW.md)
+
 An agent skill for producing a finished vertical AI short drama — typically 60 seconds — end to
 end, using the [Kling](https://kling.ai) API plus ffmpeg.
 
@@ -65,6 +67,12 @@ project. Status messages are printed in Chinese.
 | `scripts/assemble.js` | Normalise, concat, title card, burn subtitles |
 | `scripts/final-mix.js` | Voice EQ, ducked BGM, loudness normalisation, mux |
 | `scripts/get-ffmpeg.js` | Fetch a static ffmpeg build when none is present |
+| `docs/guide.zh-TW.md` | Full workflow guide in Traditional Chinese |
+| `docs/reference.zh-TW.md` | API / pricing / ffmpeg reference in Traditional Chinese |
+
+> `SKILL.md` and `reference.md` are deliberately English-only: they are injected into the agent's
+> context when the skill loads, so a bilingual version would double that token cost on every use.
+> Readers who prefer Chinese should start from the `docs/` files above.
 
 ## Cost
 
